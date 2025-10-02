@@ -8,9 +8,9 @@ O projeto foi desenvolvido com foco em boas práticas, tipagem forte e arquitetu
 ### 🔹 Backend
 
 - **Fastify**
-- **Prisma** 
-- **TypeScript** 
-- **dotenv** 
+- **Prisma**
+- **TypeScript**
+- **dotenv**
 
 ### 🔹 Frontend
 
@@ -28,7 +28,7 @@ O projeto foi desenvolvido com foco em boas práticas, tipagem forte e arquitetu
 ├── frontend/     # Interface do usuário
     ├── src/
     └── public/
- 
+
 ```
 
 ## ⚙️ Configuração do ambiente
@@ -72,21 +72,30 @@ O projeto foi desenvolvido com foco em boas práticas, tipagem forte e arquitetu
    Abra no navegador:
    [http://localhost:5173](http://localhost:5173)
 
-## 🧪 Próximos passos
+## Próximos passos backend
 
-- [ ] Configurar banco de dados
-Definir schema inicial no Prisma.
-- [ ] Implementar autenticação com BetterAuth
-Criar fluxo de cadastro/login.
-- [ ] Criar sistema de roles (admin, suporte, cliente)
-Associar roles ao usuário no banco e validar permissões no backend.
-- [ ] Usuário cadastrar um ticket
-Endpoint protegido que só aceita usuários autenticados.
-- [ ] Configurar Docker
-Criar Dockerfile e docker-compose.yml para padronizar ambiente de desenvolvimento.
+- [ X ] Configurar banco de dados
+  Definir schema inicial.
+- [ X ] CRUD User.
+- [ ] Autenticar usuário.
+- [ ] CRUD ticket.
 
+## Próximos passos frontend
+
+- [X] Tela de login
+
+- [ ] Tela de registrar admin
+      campos necessários: name(input),email(input),password(input),role(select: 5,10,15)
+      rota: http://localhost:8080/login
+
+- [ ] Tela de registrar user, mesma tela do admin com verificação do role na request.
+      campos necessários: name(input),email(input),password(input),company(select: vai puxar as company cadastradas no DB)
+
+- [ ] Tela de registrar ticket
+      campos necessários: titulo(input), corpo do ticket(input), urgencia(select: low,mid,high)
+
+- [ ] Home Page, lista de tickets disponíveis no DB
 
 ## 📌 Observação
 
 Este projeto é acadêmico/demonstrativo e tem como foco integrar inteligência artificial em um sistema de TI
-
