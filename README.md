@@ -8,28 +8,15 @@ O projeto foi desenvolvido com foco em boas práticas, tipagem forte e arquitetu
 ### 🔹 Backend
 
 - **Fastify**
-- **Prisma**
 - **TypeScript**
-- **dotenv**
+- **Zod**
+- **Knex**
 
 ### 🔹 Frontend
 
 - **React**
 - **Vite**
 - **TypeScript**
-
-## 📂 Estrutura do projeto
-
-```
-.
-├── backend/      # API e regras de negócio
-│   ├── src/
-│   └── prisma/
-├── frontend/     # Interface do usuário
-    ├── src/
-    └── public/
-
-```
 
 ## ⚙️ Configuração do ambiente
 
@@ -72,17 +59,24 @@ O projeto foi desenvolvido com foco em boas práticas, tipagem forte e arquitetu
    Abra no navegador:
    [http://localhost:5173](http://localhost:5173)
 
+## Já concluido no backend
+
+- [x] Configurar banco de dados
+      Definir schema inicial.
+- [x] CRUD User.
+
+- [x]CRUD ticket.
+
 ## Próximos passos backend
 
-- [ X ] Configurar banco de dados
-  Definir schema inicial.
-- [ X ] CRUD User.
 - [ ] Autenticar usuário.
-- [ ] CRUD ticket.
+
+
+## Já concluido no frontend
+
+- [x] Tela de login
 
 ## Próximos passos frontend
-
-- [X] Tela de login
 
 - [ ] Tela de registrar admin
       campos necessários: name(input),email(input),password(input),role(select: 5,10,15)
