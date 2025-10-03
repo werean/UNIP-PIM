@@ -1,0 +1,13 @@
+import { knex } from "../../../../config/database.config";
+import { User, UserTableName } from "../../../models";
+
+// Service apenas encapsula as queries do knex, sem lógica adicional
+export const userService = {
+  findAll: (): Promise<User[]> => knex(UserTableName).select(),
+
+  findById: (id: string): Promise<User | undefined> => knex(UserTableName).where({ id }).first(),
+
+  insert: (user: User): Promise<void> => knex(UserTableName).insert(user),
+
+  delete: (id: string): Promise<number> => knex(UserTableName).where({ id }).del(),
+};

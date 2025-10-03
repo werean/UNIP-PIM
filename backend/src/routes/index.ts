@@ -1,12 +1,12 @@
 import type { FastifyInstance } from "fastify";
-import { registerUser } from "./userRegister";
-import { registerTicket } from "./ticketRegister";
+import { userController } from "../modules/users/controllers/user.controller";
+import { ticketController } from "../modules/tickets/controllers/ticket.controller";
 
 //route register
 
 export default async function registerRoutes(server: FastifyInstance) {
   //USER
-  server.register(registerUser, { prefix: "/register" });
+  server.register(userController, { prefix: "/user" });
   //TICKET
-  server.register(registerTicket, { prefix: "/ticket" });
+  server.register(ticketController, { prefix: "/ticket" });
 }

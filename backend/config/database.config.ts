@@ -1,6 +1,6 @@
 import knexSetup from 'knex';
 import type { Knex } from 'knex';
-import { env } from './env/index';
+import { env } from '../src/env/index';
 
 export const config: Knex.Config = {
   client: env.DATABASE_CLIENT,
@@ -13,7 +13,7 @@ export const config: Knex.Config = {
   useNullAsDefault: true,
   migrations: {
     extension: 'ts',
-    directory: 'db/migrations'
+    directory: './db/migrations'
   }
 };
 
