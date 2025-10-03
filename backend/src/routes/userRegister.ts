@@ -1,11 +1,11 @@
 import type { FastifyInstance } from "fastify";
 import z, { check } from "zod";
-import Validation from "./validations/userValidation";
+import { UserValidation } from "./validations/FieldValidation";
 import { knex } from "../database";
 //router http method
-const v = new Validation();
+const v = new UserValidation();
 
-export async function LoginRoute(server: FastifyInstance) {
+export async function registerUser(server: FastifyInstance) {
   server.post("/", async (req, res) => {
     const createUserSchema = z.object({
       username: v.username,

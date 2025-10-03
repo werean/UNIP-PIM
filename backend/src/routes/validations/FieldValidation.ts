@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export default class Validation {
+export class UserValidation {
   username = z.string().min(2, "Nome deve conter no mínimo 2 caracteres.");
   email = z.email("Email deve ter formato válido");
   password = z
@@ -19,4 +19,13 @@ export default class Validation {
       message: "A senha deve conter pelo menos um caracter especial.",
     });
   roleValues = z.union([z.literal(5), z.literal(10), z.literal(15)]);
+}
+
+export class TicketValidation {
+  title = z.string().min(4, "Campo deve conter no mínimo 4 caracteres.");
+  ticket_body = z
+    .string()
+    .min(10, "O corpo do ticket deve ter pelo menos 10 caracteres.")
+    .max(5000, "O corpo do ticket não pode ultrapassar 5000 caracteres.");
+  urgency = z.union([z.literal(1), z.literal(2), z.literal(3)]);
 }

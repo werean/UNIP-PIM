@@ -1,9 +1,12 @@
 import type { FastifyInstance } from "fastify";
-
-import { LoginRoute } from "./login";
+import { registerUser } from "./userRegister";
+import { registerTicket } from "./ticketRegister";
 
 //route register
 
 export default async function registerRoutes(server: FastifyInstance) {
-  server.register(LoginRoute, { prefix: "/login" });
+  //USER
+  server.register(registerUser, { prefix: "/register" });
+  //TICKET
+  server.register(registerTicket, { prefix: "/ticket" });
 }
