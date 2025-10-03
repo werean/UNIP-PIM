@@ -2,6 +2,7 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { createTicketSchema } from "../dto/create-ticket.dto";
 import { ticketService } from "../services/ticket.service";
 import { Ticket } from "../../../models";
+import { title } from "process";
 
 export async function ticketController(server: FastifyInstance) {
   server.get("/", async (req, res) => {
@@ -24,7 +25,7 @@ export async function ticketController(server: FastifyInstance) {
   });
 
   server.delete<{ Params: { id: string } }>("/:id", async (req, res) => {
-    const { id } = req.params;
+    const id = Number(req.params);
     const ticket = await ticketService.findById(id);
 
     if (!ticket) {
@@ -36,5 +37,17 @@ export async function ticketController(server: FastifyInstance) {
       message: "Ticket deletado.",
       ticket,
     });
+  });
+
+  server.put<{ Params: { id: number } }>("/edit/:id", async (req, res) => {
+    const id = Number(req.params.id);
+    const ticket = await ticketService.findById(id);
+    if (!ticket) {
+      return res.status(404).send({ message: "Ticket não encontrado." });
+    }
+    const { title, ticket_body, urgency } = createTicketSchema.parse(req.body);
+    const updatedTicket = new Ticket(title, ticket_body, urgency);
+    await ticketService.put(id, updatedTicket);
+    return res.status(201).send({ message: "Ticket editado com sucesso!", ticket: updatedTicket });
   });
 }

@@ -18,14 +18,5 @@ export class UserValidation {
     .refine((password) => /[^A-Za-z0-9]/.test(password), {
       message: "A senha deve conter pelo menos um caracter especial.",
     });
-  roleValues = z.union([z.literal(5), z.literal(10), z.literal(15)]);
+  roleValues = z.union([z.literal(5), z.literal(10), z.literal(15)]).default(5);
 }
-
-const v = new UserValidation();
-
-export const createUserSchema = z.object({
-  username: v.username,
-  email: v.email,
-  password: v.password,
-  role: v.roleValues.optional(),
-});

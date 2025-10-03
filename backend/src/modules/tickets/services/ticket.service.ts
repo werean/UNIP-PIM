@@ -1,14 +1,16 @@
 import { knex } from "../../../../config/database.config";
-import { Ticket, TicketTableName } from "../../../models";
+import { Ticket, TicketTable } from "../../../models";
 
 // Service apenas encapsula as queries do knex, sem lógica adicional
 export const ticketService = {
-  findAll: (): Promise<Ticket[]> => knex(TicketTableName).select(),
+  findAll: (): Promise<Ticket[]> => knex(TicketTable).select(),
 
-  findById: (id: string): Promise<Ticket | undefined> =>
-    knex(TicketTableName).where({ id }).first(),
+  findById: (id: number): Promise<Ticket | undefined> => knex(TicketTable).where({ id }).first(),
 
-  insert: (ticket: Omit<Ticket, "id">): Promise<void> => knex(TicketTableName).insert(ticket),
+  insert: (ticket: Omit<Ticket, "id">): Promise<void> => knex(TicketTable).insert(ticket),
 
-  delete: (id: string): Promise<number> => knex(TicketTableName).where({ id }).del(),
+  delete: (id: number): Promise<number> => knex(TicketTable).where({ id }).del(),
+
+  put: (id: number, data: Omit<Ticket, "id">): Promise<Ticket | undefined> =>
+    knex(TicketTable).where({ id }).update(data),
 };

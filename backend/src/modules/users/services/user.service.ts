@@ -10,4 +10,7 @@ export const userService = {
   insert: (user: User): Promise<void> => knex(UserTableName).insert(user),
 
   delete: (id: string): Promise<number> => knex(UserTableName).where({ id }).del(),
+
+  put: (id: string, data: Omit<User, "id">): Promise<User | undefined> =>
+    knex(UserTableName).where({ id }).update(data),
 };

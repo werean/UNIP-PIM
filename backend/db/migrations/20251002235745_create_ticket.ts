@@ -1,8 +1,8 @@
 import type { Knex } from "knex";
-import { TicketTableName } from "../../src/models";
+import { TicketTable } from "../../src/models";
 
 export async function up(knex: Knex): Promise<void> {
-  await knex.schema.createTable(TicketTableName, (table) => {
+  await knex.schema.createTable(TicketTable, (table) => {
     table.increments("id").primary();
     table.string("title").notNullable();
     table.text("ticket_body").notNullable();
@@ -11,5 +11,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTable(TicketTableName);
+  await knex.schema.dropTable(TicketTable);
 }

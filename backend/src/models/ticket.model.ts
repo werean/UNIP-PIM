@@ -13,4 +13,4 @@ export class Ticket {
   }
 }
 
-export const TicketTableName = "tickets" as const;
+export const TicketTable = "tickets" as const;

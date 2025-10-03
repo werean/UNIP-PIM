@@ -1,11 +1,11 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { createUserSchema } from "../dto/create-user.dto";
+import { userSchema } from "../dto/user.dto";
 import { userService } from "../services/user.service";
 import { User } from "../../../models";
 
 export async function userController(server: FastifyInstance) {
   server.post("/create", async (req, res) => {
-    const { username, email, password, role } = createUserSchema.parse(req.body);
+    const { username, email, password, role } = userSchema.parse(req.body);
     const userId = crypto.randomUUID();
     const newUser = new User(userId, username, email, password, role ?? 5);
     await userService.insert(newUser);
@@ -50,5 +50,19 @@ export async function userController(server: FastifyInstance) {
     }
 
     return res.status(200).send({ users });
+  });
+
+  server.put<{ Params: { id: string } }>("/edit/:id", async (req, res) => {
+    const { id } = req.params;
+    const user = await userService.findById(id);
+    if (!user) {
+      return res.status(404).send({
+        message: "Usuário não encontrado.",
+      });
+    }
+    const { username, email, password, role } = userSchema.parse(req.body);
+    const putUser = new User(id, username, email, password, role);
+    await userService.put(id, putUser);
+    return res.status(201).send({ message: "Usuário editado com sucesso!", user: putUser });
   });
 }
