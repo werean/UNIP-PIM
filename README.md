@@ -62,15 +62,14 @@ O projeto foi desenvolvido com foco em boas práticas, tipagem forte e arquitetu
 ## Já concluido no backend
 
 - [x] Configurar banco de dados
-      Definir schema inicial.
+
 - [x] CRUD User.
 
-- [x]CRUD ticket.
+- [x] CRUD Ticket
 
 ## Próximos passos backend
 
 - [ ] Autenticar usuário.
-
 
 ## Já concluido no frontend
 
