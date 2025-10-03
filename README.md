@@ -1,24 +1,23 @@
 # 🎟️ Ticket AI — Sistema de Gestão de Tickets com Inteligência Artificial
 
-O Ticket AI é uma aplicação fullstack para abertura e gerenciamento de tickets de TI, com integração de inteligência artificial para auxiliar no diagnóstico e priorização de chamados.
-O projeto foi desenvolvido com foco em boas práticas, tipagem forte e arquitetura escalável, rodando localmente em ambiente de desenvolvimento.
+O Ticket AI é uma aplicação fullstack para abertura e gerenciamento de tickets de TI, com integração de inteligência artificial para auxiliar no diagnóstico de chamados.
 
 ## 🚀 Tecnologias
 
 ### 🔹 Backend
 
-- **Fastify** — servidor web rápido e leve
-- **TypeScript** — tipagem estática
-- **Knex** — query builder SQL
-- **Zod** — validação de schemas
-- **SQLite3/PostgreSQL** — banco de dados
+- **Fastify**
+- **TypeScript**
+- **Knex**
+- **Zod**
+- **SQLite3/PostgreSQL**
 
 ### 🔹 Frontend
 
-- **React** — biblioteca para interfaces
-- **Vite** — bundler rápido para desenvolvimento
-- **TypeScript** — tipagem estática
-- **React Router DOM** — roteamento
+- **React**
+- **Vite**
+- **TypeScript**
+- **React Router DOM**
 
 ## 📂 Estrutura do Projeto
 
@@ -166,7 +165,3 @@ frontend/
       campos necessários: titulo(input), corpo do ticket(input), urgencia(select: low,mid,high)
 
 - [ ] Home Page, lista de tickets disponíveis no DB
-
-## 📌 Observação
-
-Este projeto é acadêmico/demonstrativo e tem como foco integrar inteligência artificial em um sistema de TI
