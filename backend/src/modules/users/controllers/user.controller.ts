@@ -4,21 +4,15 @@ import { userService } from "../services/user.service";
 import { User } from "../../../models";
 
 export async function userController(server: FastifyInstance) {
-  server.post("/create", async (req: FastifyRequest, res: FastifyReply) => {
+  server.post("/create", async (req, res) => {
     const { username, email, password, role } = createUserSchema.parse(req.body);
-
-    const newUser: User = {
-      id: crypto.randomUUID(),
-      email,
-      username,
-      password,
-      role: role ?? 5,
-    };
+    const userId = crypto.randomUUID();
+    const newUser = new User(userId, username, email, password, role ?? 5);
     await userService.insert(newUser);
     return res.status(201).send({ message: "Usuário criado com sucesso!", user: newUser });
   });
 
-  server.delete<{ Params: { id: string } }>("/delete/:id", async (req, res: FastifyReply) => {
+  server.delete<{ Params: { id: string } }>("/delete/:id", async (req, res) => {
     const { id } = req.params;
     const user = await userService.findById(id);
 
@@ -33,7 +27,7 @@ export async function userController(server: FastifyInstance) {
     });
   });
 
-  server.get<{ Params: { id: string } }>("/find/:id", async (req, res: FastifyReply) => {
+  server.get<{ Params: { id: string } }>("/find/:id", async (req, res) => {
     const { id } = req.params;
     const user = await userService.findById(id);
 
@@ -46,7 +40,7 @@ export async function userController(server: FastifyInstance) {
     return res.status(200).send({ user });
   });
 
-  server.get("/list", async (req: FastifyRequest, res: FastifyReply) => {
+  server.get("/list", async (req, res) => {
     const users = await userService.findAll();
 
     if (users.length === 0) {
