@@ -1,7 +1,7 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { createTicketSchema } from "../dto/create-ticket.dto";
-import { ticketService } from "../services/ticket.service";
-import { Ticket } from "../../../models";
+import { createTicketSchema } from "./dto/create-ticket.dto";
+import { ticketService } from "./ticket.service";
+import { Ticket } from "../../interfaces";
 import { title } from "process";
 
 export async function ticketController(server: FastifyInstance) {
@@ -19,7 +19,7 @@ export async function ticketController(server: FastifyInstance) {
   server.post("/", async (req, res) => {
     const { title, ticket_body, urgency } = createTicketSchema.parse(req.body);
 
-    const newTicket = new Ticket(ticket_body, title, urgency);
+    const newTicket: Ticket = { ticket_body, title, urgency };
     await ticketService.insert(newTicket);
     return res.status(201).send({ message: "Ticket criado com sucesso!", ticket: newTicket });
   });
@@ -46,7 +46,7 @@ export async function ticketController(server: FastifyInstance) {
       return res.status(404).send({ message: "Ticket não encontrado." });
     }
     const { title, ticket_body, urgency } = createTicketSchema.parse(req.body);
-    const updatedTicket = new Ticket(title, ticket_body, urgency);
+    const updatedTicket: Ticket = { title, ticket_body, urgency };
     await ticketService.put(id, updatedTicket);
     return res.status(201).send({ message: "Ticket editado com sucesso!", ticket: updatedTicket });
   });

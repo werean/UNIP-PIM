@@ -1,5 +1,5 @@
 import type { Knex } from "knex";
-import { TicketTable } from "../../src/models";
+import { TicketTable } from "../../src/interfaces";
 
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable(TicketTable, (table) => {

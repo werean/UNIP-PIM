@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify";
-import { userController } from "../modules/users/controllers/user.controller";
-import { ticketController } from "../modules/tickets/controllers/ticket.controller";
+import { userController } from "../modules/users/user.controller";
+import { ticketController } from "../modules/tickets/ticket.controller";
 
 //route register
 

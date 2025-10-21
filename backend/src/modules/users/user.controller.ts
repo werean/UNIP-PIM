@@ -1,13 +1,13 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { userSchema } from "../dto/user.dto";
-import { userService } from "../services/user.service";
-import { User } from "../../../models";
+import { userSchema, UserDTO } from "./dto/user.dto";
+import { userService } from "./user.service";
+import { User } from "../../interfaces";
 
 export async function userController(server: FastifyInstance) {
-  server.post("/create", async (req, res) => {
+  server.post("/create", async (req: FastifyRequest<{ Body: UserDTO }>, res) => {
     const { username, email, password, role } = userSchema.parse(req.body);
     const userId = crypto.randomUUID();
-    const newUser = new User(userId, username, email, password, role ?? 5);
+    const newUser: User = { id: userId, username, email, password, role: role ?? 5 };
     await userService.insert(newUser);
     return res.status(201).send({ message: "Usuário criado com sucesso!", user: newUser });
   });
@@ -61,7 +61,7 @@ export async function userController(server: FastifyInstance) {
       });
     }
     const { username, email, password, role } = userSchema.parse(req.body);
-    const putUser = new User(id, username, email, password, role);
+    const putUser: User = { id, username, email, password, role };
     await userService.put(id, putUser);
     return res.status(201).send({ message: "Usuário editado com sucesso!", user: putUser });
   });

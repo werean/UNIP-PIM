@@ -1,5 +1,5 @@
-import { knex } from "../../../../config/database.config";
-import { Ticket, TicketTable } from "../../../models";
+import { knex } from "../../../config/database.config";
+import { Ticket, TicketTable } from "../../interfaces";
 
 // Service apenas encapsula as queries do knex, sem lógica adicional
 export const ticketService = {
