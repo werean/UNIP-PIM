@@ -4,28 +4,21 @@ import { LoginDTO, loginSchema } from "./dto/auth.dto";
 import jwt from "jsonwebtoken";
 import { userService } from "../users/user.service";
 import { success } from "zod";
+import { authConfig } from "./auth.config";
 
 export async function login(server: FastifyInstance) {
   server.post("/login", async (req: FastifyRequest<{ Body: LoginDTO }>, res: FastifyReply) => {
     const { email, password } = loginSchema.parse(req.body);
     const user = await userService.findByEmail(email);
-    if (!user) {
+    if (!user || user.password !== password) {
       res.code(404).send({
         success: false,
         message: "Usuário não encontrado.",
       });
     }
-    if (user.password !== password) {
-      res.code(401).send({
-        success: false,
-        message: "Usuário não encontrado.",
-      });
-    }
-    const secret = process.env.JWT_SECRET;
-    if (!secret) {
-      throw new Error("JWT_SECRET não configurado");
-    }
-    const token = jwt.sign({ sub: user.id }, secret, { expiresIn: "1h" });
+    const token = jwt.sign({ sub: user.id }, authConfig.jwt.secret, {
+      expiresIn: authConfig.jwt.expiresIn,
+    });
     res.setCookie("token", token, {
       httpOnly: true,
       secure: true,
