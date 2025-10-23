@@ -14,7 +14,7 @@ export async function userController(server: FastifyInstance) {
     const { email, password, username, role } = parsedUser.data;
     const verifyEmail = await userService.findByEmail(email);
     if (verifyEmail) {
-      res.code(301).send({ message: "E-mail já cadastrado." });
+      return res.code(301).send({ message: "E-mail já cadastrado." });
     }
     const salt = Number(process.env.BCRYPT_SALT) || 3;
 

@@ -1,6 +1,6 @@
-# 🎟️ Ticket AI — Sistema de Gestão de Tickets com Inteligência Artificial
+# 🎟️ UNIP-PIM — Sistema de Gestão de Tickets
 
-O Ticket AI é uma aplicação fullstack para abertura e gerenciamento de tickets de TI, com integração de inteligência artificial para auxiliar no diagnóstico de chamados.
+O UNIP-PIM é uma aplicação fullstack para abertura e gerenciamento de tickets de TI, desenvolvida como projeto acadêmico.
 
 ## 🚀 Tecnologias
 
@@ -10,7 +10,8 @@ O Ticket AI é uma aplicação fullstack para abertura e gerenciamento de ticket
 - **TypeScript**
 - **Knex**
 - **Zod**
-- **SQLite3/PostgreSQL**
+- **SQLite3**
+- **Bun** (runtime)
 
 ### 🔹 Frontend
 
@@ -18,6 +19,7 @@ O Ticket AI é uma aplicação fullstack para abertura e gerenciamento de ticket
 - **Vite**
 - **TypeScript**
 - **React Router DOM**
+- **Bun** (runtime)
 
 ## 📂 Estrutura do Projeto
 
@@ -30,9 +32,13 @@ backend/
 │   └── migrations/      # Migrations do Knex (criação de tabelas)
 ├── src/
 │   ├── env/            # Configuração de variáveis de ambiente
+│   ├── interfaces/     # Interfaces TypeScript para entidades
 │   ├── middleware/     # Middlewares do Fastify
-│   ├── models/         # Modelos de dados e interfaces TypeScript
 │   ├── modules/        # Partes da aplicação
+│   │   ├── auth/
+│   │   │   ├── controllers/   # Endpoints de autenticação
+│   │   │   ├── dto/           # DTOs e validações Zod
+│   │   │   └── config/        # Configurações JWT e cookie
 │   │   ├── users/
 │   │   │   ├── controllers/   # Endpoints da API
 │   │   │   ├── services/      # Lógica de acesso ao banco de dados
@@ -63,8 +69,8 @@ frontend/
 1. **Clone o repositório**
 
    ```bash
-   git clone https://github.com/seu-usuario/ticket-ai.git
-   cd ticket-ai
+   git clone https://github.com/werean/UNIP-PIM.git
+   cd UNIP-PIM
    ```
 
 2. **Configure as variáveis de ambiente**
@@ -81,14 +87,14 @@ frontend/
 
    ```bash
    cd backend
-   npm install
+   bun install
    ```
 
    Frontend:
 
    ```bash
    cd frontend
-   npm install
+   bun install
    ```
 
 4. **Configure o banco de dados**
@@ -97,19 +103,19 @@ frontend/
 
    ```bash
    cd backend
-   npm run knex migrate:latest
+   bun run knex migrate:latest
    ```
 
    Para criar uma nova migration:
 
    ```bash
-   npm run knex migrate:make nome_da_migration
+   bun run knex migrate:make nome_da_migration
    ```
 
    Para reverter a última migration:
 
    ```bash
-   npm run knex migrate:rollback
+   bun run knex migrate:rollback
    ```
 
 ## ▶️ Executando o projeto
@@ -118,7 +124,7 @@ frontend/
 
    ```bash
    cd backend
-   npm run dev
+   bun run dev
    ```
 
    O backend estará rodando em [http://localhost:8080](http://localhost:8080)
@@ -129,7 +135,7 @@ frontend/
 
    ```bash
    cd frontend
-   npm run dev
+   bun run dev
    ```
 
    O frontend estará rodando em [http://localhost:5173](http://localhost:5173)
@@ -143,10 +149,14 @@ frontend/
 - [x] Configurar banco de dados
 - [x] CRUD User
 - [x] CRUD Ticket
+- [x] Autenticação básica (login com JWT e cookie)
 
 ## Próximos passos backend
 
-- [ ] Autenticar usuário
+- [ ] Middleware de autenticação completo
+- [ ] Validações adicionais
+- [ ] Implementar autenticação por sessão (usuário/técnico)
+- [ ] Integração com WebSocket e Ollama
 
 ## Já concluido no frontend
 
@@ -155,13 +165,13 @@ frontend/
 ## Próximos passos frontend
 
 - [ ] Tela de registrar admin
-      campos necessários: name(input),email(input),password(input),role(select: 5,10,15)
-      rota: http://localhost:8080/login
+      campos necessários: username(input), email(input), password(input), role(select: 5,10,15)
+      rota: POST http://localhost:8080/user/create
 
 - [ ] Tela de registrar user, mesma tela do admin com verificação do role na request.
-      campos necessários: name(input),email(input),password(input),company(select: vai puxar as company cadastradas no DB)
+      campos necessários: username(input), email(input), password(input), role(select: 5,10,15)
 
 - [ ] Tela de registrar ticket
-      campos necessários: titulo(input), corpo do ticket(input), urgencia(select: low,mid,high)
+      campos necessários: title(input), ticket_body(textarea), urgency(select: 1,2,3)
 
 - [ ] Home Page, lista de tickets disponíveis no DB
