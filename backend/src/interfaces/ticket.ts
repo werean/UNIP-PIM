@@ -1,7 +1,7 @@
 type Urgency = 1 | 2 | 3;
 
 export interface Ticket {
-  readonly id?: number;
+  readonly id?: string;
   title: string;
   ticket_body: string;
   urgency: Urgency;

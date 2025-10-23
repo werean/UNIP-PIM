@@ -1,5 +1,5 @@
 import fastify from "fastify";
-import cookie, { fastifyCookie } from "@fastify/cookie";
+import { fastifyCookie } from "@fastify/cookie";
 import dotenv from "dotenv";
 import registerRoutes from "./routes/index";
 import { env } from "./env";
@@ -10,14 +10,12 @@ dotenv.config();
 
 const server = fastify();
 const port = env.PORT;
-server.register(cookie, {
-  secret: process.env.COOKIE_SECRET,
-  hook: "onRequest",
-});
+
 server.register(fastifyCookie, {
   secret: authConfig.jwt.secret,
+  hook: "onRequest",
 });
-server.register(verifyToken);
+server.addHook("onRequest", verifyToken);
 server.register(registerRoutes);
 
 server.listen(

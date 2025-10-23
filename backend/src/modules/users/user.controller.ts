@@ -2,14 +2,38 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { userSchema, UserDTO } from "./dto/user.dto";
 import { userService } from "./user.service";
 import { User } from "../../interfaces";
+import bcrypt from "bcrypt";
 
 export async function userController(server: FastifyInstance) {
   server.post("/create", async (req: FastifyRequest<{ Body: UserDTO }>, res) => {
-    const { username, email, password, role } = userSchema.parse(req.body);
+    const parsedUser = userSchema.safeParse(req.body);
+    if (!parsedUser.success) {
+      return res.code(301).send({ message: "Cadastra certo ai!" });
+    }
     const userId = crypto.randomUUID();
-    const newUser: User = { id: userId, username, email, password, role: role ?? 5 };
-    await userService.insert(newUser);
-    return res.status(201).send({ message: "Usuário criado com sucesso!", user: newUser });
+    const { email, password, username, role } = parsedUser.data;
+    const verifyEmail = await userService.findByEmail(email);
+    if (verifyEmail) {
+      res.code(301).send({ message: "E-mail já cadastrado." });
+    }
+    const salt = Number(process.env.BCRYPT_SALT) || 3;
+
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const newUser: User = {
+      id: userId,
+      email,
+      password: hashedPassword,
+      username,
+      role,
+    };
+    try {
+      await userService.insert(newUser);
+      return res
+        .status(201)
+        .send({ message: "Usuário criado com sucesso!", newUser: { email, username, role } });
+    } catch (e) {
+      res.code(301).send({ message: "Falha ao criar usuário" });
+    }
   });
 
   server.delete<{ Params: { id: string } }>("/delete/:id", async (req, res) => {
