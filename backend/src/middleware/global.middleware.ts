@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export async function verifyToken(request: FastifyRequest, reply: FastifyReply) {
   const token = request.cookies[authConfig.cookie.name];
-  const publicRoute = ["/login", "/user/create"];
+  const publicRoute = ["/login", "/user/create", "/ws"];
   const urlPath = request.raw.url?.split("?")[0];
   if (publicRoute.includes(urlPath || "")) {
     return;
